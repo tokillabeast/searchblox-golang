@@ -2,7 +2,7 @@
 
 ### Overview
 
-Simple Golang Client for searchblox - https://www.searchblox.com/:
+Simple Golang Client for SearchBlox API(v8.6) - https://www.searchblox.com/:
 - Go(1.8.0) programming language - https://golang.org/
 - Docker(17.03.0-ce) - https://github.com/docker/docker
 - Docker-Compose(1.11.2) - https://github.com/docker/compose
