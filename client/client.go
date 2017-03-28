@@ -10,13 +10,13 @@ import (
 )
 
 const (
-	// XML Rest API
 	contentTypeXML = "application/xml"
+	contentTypeJSON            = "application/json"
 
 	// JSON Rest API
-	contentTypeJSON            = "application/json"
 	createCustomCollectionJSON = "/searchblox/rest/v1/api/coladd"
 	deleteCustomCollectionJSON = "/searchblox/rest/v1/api/coldelete"
+	clearCustomCollectionJSON = "/searchblox/rest/v1/api/clear"
 
 	// errors
 	encodeErrorJSON = "JSON encode error"
@@ -44,7 +44,7 @@ func (s *SearchBlox) CreateCustomCollection(customCollection CustomCollection) e
 		return errors.New(encodeErrorJSON)
 	}
 	url := fmt.Sprintf("%s%s", s.Host, createCustomCollectionJSON)
-	resp, err = http.Post(url, contentTypeJSON, bytes.NewBuffer(b))
+	resp, err := http.Post(url, contentTypeJSON, bytes.NewBuffer(b))
 	if err != nil {
 		return errors.New("Create custom collection error")
 	}
