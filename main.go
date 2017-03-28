@@ -13,5 +13,6 @@ func main() {
 		},
 	}
 	c.CreateCustomCollection(customCollection)
+	c.ClearCustomCollection(customCollection)
 	c.DeleteCustomCollection(customCollection)
 }

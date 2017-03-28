@@ -10,13 +10,13 @@ import (
 )
 
 const (
-	contentTypeXML = "application/xml"
-	contentTypeJSON            = "application/json"
+	contentTypeXML  = "application/xml"
+	contentTypeJSON = "application/json"
 
 	// JSON Rest API
 	createCustomCollectionJSON = "/searchblox/rest/v1/api/coladd"
 	deleteCustomCollectionJSON = "/searchblox/rest/v1/api/coldelete"
-	clearCustomCollectionJSON = "/searchblox/rest/v1/api/clear"
+	clearCustomCollectionJSON  = "/searchblox/rest/v1/api/clear"
 
 	// errors
 	encodeErrorJSON = "JSON encode error"
@@ -38,15 +38,14 @@ type CustomCollection struct {
 	Document Document `json:"document"`
 }
 
-func (s *SearchBlox) CreateCustomCollection(customCollection CustomCollection) error {
+func (s *SearchBlox) makeCustomCollectionCall(url string, customCollection CustomCollection) error {
 	b, err := json.Marshal(customCollection)
 	if err != nil {
 		return errors.New(encodeErrorJSON)
 	}
-	url := fmt.Sprintf("%s%s", s.Host, createCustomCollectionJSON)
 	resp, err := http.Post(url, contentTypeJSON, bytes.NewBuffer(b))
 	if err != nil {
-		return errors.New("Create custom collection error")
+		return errors.New("Custom collection error")
 	}
 
 	fmt.Println("response Status:", resp.Status)
@@ -56,21 +55,29 @@ func (s *SearchBlox) CreateCustomCollection(customCollection CustomCollection) e
 	return nil
 }
 
+func (s *SearchBlox) CreateCustomCollection(customCollection CustomCollection) error {
+	url := fmt.Sprintf("%s%s", s.Host, createCustomCollectionJSON)
+	err := s.makeCustomCollectionCall(url, customCollection)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (s *SearchBlox) DeleteCustomCollection(customCollection CustomCollection) error {
-	b, err := json.Marshal(customCollection)
-	if err != nil {
-		return errors.New(encodeErrorJSON)
-	}
-
 	url := fmt.Sprintf("%s%s", s.Host, deleteCustomCollectionJSON)
-	resp, err := http.Post(url, contentTypeJSON, bytes.NewBuffer(b))
+	err := s.makeCustomCollectionCall(url, customCollection)
 	if err != nil {
-		return errors.New("Delete custom collection error")
+		return err
 	}
+	return nil
+}
 
-	fmt.Println("response Status:", resp.Status)
-	fmt.Println("response Headers:", resp.Header)
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("response Body:", string(body))
+func (s *SearchBlox) ClearCustomCollection(customCollection CustomCollection) error {
+	url := fmt.Sprintf("%s%s", s.Host, clearCustomCollectionJSON)
+	err := s.makeCustomCollectionCall(url, customCollection)
+	if err != nil {
+		return err
+	}
 	return nil
 }
