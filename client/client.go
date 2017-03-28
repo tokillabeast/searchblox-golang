@@ -32,6 +32,12 @@ type SearchBlox struct {
 	// FIXME: store ApiKey in Client struct?
 }
 
+type Meta struct {
+	Location string `json:"location.omitempty"`
+	Temp     string `json:"temp,omitempty"`
+	Weather  string `json:"weather,omitempty"`
+}
+
 type Document struct {
 	Colname      string `json:"colname"`
 	Url          string `json:"url,omitempty"`
@@ -45,11 +51,7 @@ type Document struct {
 	Content      string `json:"content,omitempty"`
 	LastModified string `json:"lastmodified,omitempty"`
 	ContentType  string `json:"contenttype,omitempty"`
-	meta         struct {
-		Location string `json:"location.omitempty"`
-		Temp     string `json:"temp,omitempty"`
-		Weather  string `json:"weather,omitempty"`
-	}
+	Meta         Meta   `json:"meta,omitempty"`
 }
 
 type CustomCollection struct {
@@ -57,17 +59,21 @@ type CustomCollection struct {
 	Document Document `json:"document"`
 }
 
-func (s *SearchBlox) makeCustomCollectionCall(url string, customCollection CustomCollection) error {
+func (s *SearchBlox) makeCall(url string, customCollection CustomCollection) error {
 	b, err := json.Marshal(customCollection)
 	if err != nil {
 		return errors.New(encodeErrorJSON)
 	}
+	fmt.Print(string(b))
 	resp, err := http.Post(url, contentTypeJSON, bytes.NewBuffer(b))
 	if err != nil {
 		return errors.New("Custom collection error")
 	}
-
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("Status: %s\n Body: %s", resp.Status, resp.Body)
+	}
 	fmt.Println("response Status:", resp.Status)
+	fmt.Println("response StatusCode:", resp.StatusCode)
 	fmt.Println("response Headers:", resp.Header)
 	body, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println("response Body:", string(body))
@@ -76,7 +82,7 @@ func (s *SearchBlox) makeCustomCollectionCall(url string, customCollection Custo
 
 func (s *SearchBlox) CreateCustomCollection(customCollection CustomCollection) error {
 	url := fmt.Sprintf("%s%s", s.Host, createCustomCollectionJSON)
-	err := s.makeCustomCollectionCall(url, customCollection)
+	err := s.makeCall(url, customCollection)
 	if err != nil {
 		return err
 	}
@@ -85,7 +91,7 @@ func (s *SearchBlox) CreateCustomCollection(customCollection CustomCollection) e
 
 func (s *SearchBlox) DeleteCustomCollection(customCollection CustomCollection) error {
 	url := fmt.Sprintf("%s%s", s.Host, deleteCustomCollectionJSON)
-	err := s.makeCustomCollectionCall(url, customCollection)
+	err := s.makeCall(url, customCollection)
 	if err != nil {
 		return err
 	}
@@ -94,7 +100,16 @@ func (s *SearchBlox) DeleteCustomCollection(customCollection CustomCollection) e
 
 func (s *SearchBlox) ClearCustomCollection(customCollection CustomCollection) error {
 	url := fmt.Sprintf("%s%s", s.Host, clearCustomCollectionJSON)
-	err := s.makeCustomCollectionCall(url, customCollection)
+	err := s.makeCall(url, customCollection)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *SearchBlox) IndexDocumentCustomCollection(customCollection CustomCollection) error {
+	url := fmt.Sprintf("%s%s", s.Host, indexDocumentCustomCollectionJSON)
+	err := s.makeCall(url, customCollection)
 	if err != nil {
 		return err
 	}
