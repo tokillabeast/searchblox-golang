@@ -1,0 +1,40 @@
+version: '3.1'
+
+services:
+
+  searchblox:
+    image: searchblox/searchblox:v8.3.1
+    container_name: searchblox
+    command: "/opt/searchblox/startSearchBlox"
+    ports:
+      - "8089:80"
+    volumes:
+      - searchblox_data:/opt/searchblox
+    networks:
+      - searchblox_golang_network
+
+  searchblox_golang:
+    image: golang:1.8.0
+    container_name: searchblox_golang
+    working_dir: /go/src/github.com/tokillamockingbird/searchblox-golang
+    command: /bin/sh -c "cd backend && go build"
+    depends_on:
+      - searchblox
+    volumes:
+      - .:/go/src/github.com/tokillamockingbird/searchblox-golang/
+      - golang_data:/go/src
+    networks:
+      - searchblox_golang_network
+    environment:
+      - GOPATH=/go
+
+volumes:
+  searchblox_data:
+    driver: local
+  golang_data:
+    driver: local
+
+networks:
+  searchblox_golang_network:
+    driver: bridge
+
