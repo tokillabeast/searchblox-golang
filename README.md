@@ -20,9 +20,9 @@ To use this package open terminal and execute(or use some golang package manager
 ```
 To start SearchBox locally with Docker just locate to `searchblox-golang` directory and execute command:
 ```
-    docker-compose up -d
+    docker-compose start searchblox
 ```
-After this you can check Searchblox on 8089 port, open `localhost:8089` in browser to check it.
+After this you can check Searchblox on 80 port, open `localhost:80` in browser to check it.
 
 ```go
 package main
@@ -32,7 +32,7 @@ import (
 )
 
 func main() {
-	c := client.SearchBlox{Host: "http://localhost:8089"}
+	c := client.SearchBlox{Host: "http://searchblox:80"}
 	customCollection := client.CustomCollection{
 		ApiKey: "25B213BA03FAB750790FC63FD1C6B301",
 		Document: client.Document{

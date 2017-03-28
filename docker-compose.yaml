@@ -7,7 +7,7 @@ services:
     container_name: searchblox
     command: "/opt/searchblox/startSearchBlox"
     ports:
-      - "8089:80"
+      - "80:80"
     volumes:
       - searchblox_data:/opt/searchblox
     networks:
@@ -17,7 +17,7 @@ services:
     image: golang:1.8.0
     container_name: searchblox_golang
     working_dir: /go/src/github.com/tokillamockingbird/searchblox-golang
-    command: /bin/sh -c "cd backend && go build"
+    command: /bin/sh -c "go build && ./searchblox-golang"
     depends_on:
       - searchblox
     volumes:
