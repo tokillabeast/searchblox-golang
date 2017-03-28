@@ -12,7 +12,16 @@ func main() {
 			Colname: "Test",
 		},
 	}
-	c.CreateCustomCollection(customCollection)
-	c.ClearCustomCollection(customCollection)
-	c.DeleteCustomCollection(customCollection)
+	err := c.CreateCustomCollection(customCollection)
+	if err != nil {
+		panic(err)
+	}
+	err = c.ClearCustomCollection(customCollection)
+	if err != nil {
+		panic(err)
+	}
+	err = c.DeleteCustomCollection(customCollection)
+	if err != nil {
+		panic(err)
+	}
 }
