@@ -41,7 +41,7 @@ func main() {
 			ColName: "Test",
 		},
 	}
-	// FIXME: check if we have limit on collection creation or error during creation situations
+
 	_, err := c.CreateCustomCollection(customCollection)
 	if err != nil {
 		panic(err)
