@@ -39,26 +39,20 @@ type Client struct {
 	// FIXME: store ApiKey in Client struct?
 }
 
-type Meta struct {
-	Location string `json:"location.omitempty"`
-	Temp     string `json:"temp,omitempty"`
-	Weather  string `json:"weather,omitempty"`
-}
-
 type Document struct {
-	Colname      string `json:"colname"`
-	Url          string `json:"url,omitempty"`
-	Uid          string `json:"uid,omitempty"`
-	Location     string `json:"location,omitempty"`
-	Alpha        string `json:"alpha,omitempty"`
-	Size         string `json:"size,omitempty"`
-	Title        string `json:"title,omitempty"`
-	Keywords     string `json:"keywords,omitempty"`
-	Description  string `json:"description,omitempty"`
-	Content      string `json:"content,omitempty"`
-	LastModified string `json:"lastmodified,omitempty"`
-	ContentType  string `json:"contenttype,omitempty"`
-	Meta         Meta   `json:"meta,omitempty"`
+	ColName      string            `json:"colname"`
+	Url          string            `json:"url,omitempty"`
+	Uid          string            `json:"uid,omitempty"`
+	Location     string            `json:"location,omitempty"`
+	Alpha        string            `json:"alpha,omitempty"`
+	Size         int               `json:"size,omitempty"`
+	Title        string            `json:"title,omitempty"`
+	Keywords     string            `json:"keywords,omitempty"`
+	Description  string            `json:"description,omitempty"`
+	Content      string            `json:"content,omitempty"`
+	LastModified string            `json:"lastmodified,omitempty"`
+	ContentType  string            `json:"contenttype,omitempty"`
+	Meta         map[string]string `json:"meta"`
 }
 
 type CustomCollection struct {
@@ -67,59 +61,69 @@ type CustomCollection struct {
 }
 
 //FIXME: better searchblox exception handler(Bad request, etc)
-func (s *Client) makeCall(url string, customCollection CustomCollection) error {
+func (s *Client) makeCall(url string, customCollection CustomCollection) ([]byte, error) {
 	b, err := json.Marshal(customCollection)
 	if err != nil {
-		return errors.New(encodeErrorJSON)
+		return nil, errors.New(encodeErrorJSON)
 	}
+	fmt.Println("\n\n\nrequest Url: ", url)
 	fmt.Print(string(b))
 	resp, err := http.Post(url, contentTypeJSON, bytes.NewBuffer(b))
 	if err != nil {
-		return errors.New("Custom collection error")
+		return nil, errors.New("Custom collection error")
 	}
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Status: %s\n Body: %s", resp.Status, resp.Body)
+		return nil, fmt.Errorf("Status: %s\n Body: %s", resp.Status, resp.Body)
 	}
 	fmt.Println("response Status:", resp.Status)
 	fmt.Println("response StatusCode:", resp.StatusCode)
 	fmt.Println("response Headers:", resp.Header)
 	body, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println("response Body:", string(body))
-	return nil
+	return body, nil
 }
 
-func (s *Client) CreateCustomCollection(customCollection CustomCollection) error {
+func (s *Client) CreateCustomCollection(customCollection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, createCustomCollectionJSON)
-	err := s.makeCall(url, customCollection)
+	body, err := s.makeCall(url, customCollection)
 	if err != nil {
-		return err
+		return "", err
 	}
-	return nil
+	return string(body), nil
 }
 
-func (s *Client) DeleteCustomCollection(customCollection CustomCollection) error {
+func (s *Client) DeleteCustomCollection(customCollection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, deleteCustomCollectionJSON)
-	err := s.makeCall(url, customCollection)
+	body, err := s.makeCall(url, customCollection)
 	if err != nil {
-		return err
+		return "", err
 	}
-	return nil
+	return string(body), nil
 }
 
-func (s *Client) ClearCustomCollection(customCollection CustomCollection) error {
+func (s *Client) ClearCustomCollection(customCollection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, clearCustomCollectionJSON)
-	err := s.makeCall(url, customCollection)
+	body, err := s.makeCall(url, customCollection)
 	if err != nil {
-		return err
+		return "", err
 	}
-	return nil
+	return string(body), nil
 }
 
-func (s *Client) IndexDocumentCustomCollection(customCollection CustomCollection) error {
+func (s *Client) IndexDocumentCustomCollection(customCollection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, indexDocumentCustomCollectionJSON)
-	err := s.makeCall(url, customCollection)
+	body, err := s.makeCall(url, customCollection)
 	if err != nil {
-		return err
+		return "", err
 	}
-	return nil
+	return string(body), nil
+}
+
+func (s *Client) DocumentStatusCustomCollection(customCollection CustomCollection) (string, error) { //FIXME: return map to support meta?
+	url := fmt.Sprintf("%s%s", s.Host, documentStatusCustomCollectionJSON)
+	body, err := s.makeCall(url, customCollection)
+	if err != nil {
+		return "", err
+	}
+	return string(body), nil
 }

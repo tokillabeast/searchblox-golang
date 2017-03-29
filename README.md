@@ -32,52 +32,64 @@ import (
 )
 
 func main() {
-	c := searchblox.Client{Host: "http://searchblox:80"}
+	apiKey := "47AD645E72CEA9D8B2AB08A2312BF432"
+	c := searchblox.Client{Host: "http://localhost:80"}
 
 	customCollection := searchblox.CustomCollection{
-		ApiKey: "25B213BA03FAB750790FC63FD1C6B301",
+		ApiKey: apiKey,
 		Document: searchblox.Document{
-			Colname: "Test",
+			ColName: "Test",
 		},
 	}
-	err := c.CreateCustomCollection(customCollection)
+	// FIXME: check if we have limit on collection creation or error during creation situations
+	_, err := c.CreateCustomCollection(customCollection)
 	if err != nil {
 		panic(err)
 	}
 
 	indexCustomCollection := searchblox.CustomCollection{
-		ApiKey: "25B213BA03FAB750790FC63FD1C6B301",
+		ApiKey: apiKey,
 		Document: searchblox.Document{
-			Colname:      "Test",
+			ColName:      "Test",
 			Url:          "http://www.searchblox.com",
 			Uid:          "http://www.searchblox.com",
 			Location:     "http://www.searchblox.com",
 			Alpha:        "string",
-			Size:         "44244",
+			Size:         44244,
 			Title:        "Text",
 			Keywords:     "keywords",
 			Description:  "SearchBlox Content Search Software",
 			Content:      "content",
 			LastModified: "14 January 2015 06:19:42 GMT",
 			ContentType:  "HTML",
-			Meta: searchblox.Meta{
-				Location: "San Francisco",
-				Temp:     "23",
-				Weather:  "sunny",
+			Meta: map[string]string{
+				"custom": "Value",
 			},
 		},
 	}
-	err = c.IndexDocumentCustomCollection(indexCustomCollection)
+	_, err = c.IndexDocumentCustomCollection(indexCustomCollection)
 	if err != nil {
 		panic(err)
 	}
 
-	err = c.ClearCustomCollection(customCollection)
+	statusCustomCollection := searchblox.CustomCollection{
+		ApiKey: apiKey,
+		Document: searchblox.Document{
+			ColName: "Test",
+			Uid: "http://www.searchblox.com",
+		},
+	}
+	_, err = c.DocumentStatusCustomCollection(statusCustomCollection)
 	if err != nil {
 		panic(err)
 	}
 
-	err = c.DeleteCustomCollection(customCollection)
+	_, err = c.ClearCustomCollection(customCollection)
+	if err != nil {
+		panic(err)
+	}
+
+	_, err = c.DeleteCustomCollection(customCollection)
 	if err != nil {
 		panic(err)
 	}
