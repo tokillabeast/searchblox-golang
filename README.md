@@ -32,7 +32,8 @@ import (
 )
 
 func main() {
-	c := searchblox.Client{Host: "http://localhost:80"}
+	c := searchblox.Client{Host: "http://searchblox:80"}
+
 	customCollection := searchblox.CustomCollection{
 		ApiKey: "25B213BA03FAB750790FC63FD1C6B301",
 		Document: searchblox.Document{
@@ -43,6 +44,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 	indexCustomCollection := searchblox.CustomCollection{
 		ApiKey: "25B213BA03FAB750790FC63FD1C6B301",
 		Document: searchblox.Document{
@@ -69,14 +71,15 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 	err = c.ClearCustomCollection(customCollection)
 	if err != nil {
 		panic(err)
 	}
+
 	err = c.DeleteCustomCollection(customCollection)
 	if err != nil {
 		panic(err)
 	}
 }
-
 ```
