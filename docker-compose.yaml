@@ -16,12 +16,12 @@ services:
   searchblox_golang:
     image: golang:1.8.0
     container_name: searchblox_golang
-    working_dir: /go/src/github.com/tokillamockingbird/searchblox-golang
-    command: /bin/sh -c "go build && ./searchblox-golang"
+    working_dir: /go/src/github.com/tokillamockingbird/searchblox-golang/main
+    command: /bin/sh -c "go build && ./main"
     depends_on:
       - searchblox
     volumes:
-      - .:/go/src/github.com/tokillamockingbird/searchblox-golang/
+      - .:/go/src/github.com/tokillamockingbird/searchblox-golang
       - golang_data:/go/src
     networks:
       - searchblox_golang_network
