@@ -12,13 +12,21 @@ import (
 const (
 	contentTypeJSON = "application/json"
 
-	// JSON Rest API
-	createCustomCollectionJSON         = "/searchblox/rest/v1/api/coladd"
-	deleteCustomCollectionJSON         = "/searchblox/rest/v1/api/coldelete"
-	clearCustomCollectionJSON          = "/searchblox/rest/v1/api/clear"
-	indexDocumentCustomCollectionJSON  = "/searchblox/rest/v1/api/add"
-	documentStatusCustomCollectionJSON = "/searchblox/rest/v1/api/status"
-	deleteDocumentCustomCollectionJSON = "/searchblox/rest/v1/api/delete"
+	// SearchBlox JSON Rest API(https://developer.searchblox.com/v8.6/reference)
+	createCustomCollectionJSON                             = "/searchblox/rest/v1/api/coladd"
+	deleteCustomCollectionJSON                             = "/searchblox/rest/v1/api/coldelete"
+	clearCustomCollectionJSON                              = "/searchblox/rest/v1/api/clear"
+	indexDocumentCustomCollectionJSON                      = "/searchblox/rest/v1/api/add"
+	documentStatusCustomCollectionJSON                     = "/searchblox/rest/v1/api/status"
+	deleteDocumentCustomCollectionJSON                     = "/searchblox/rest/v1/api/delete"
+	addUpdateDocumentHttpFileSystemCollectionJSON          = "/searchblox/rest/v1/api/docadd"
+	deleteDocumentHttpFileSystemCollectionJSON             = "/searchblox/rest/v1/api/docdelete"
+	addHttpFileSystemOrDatabaseCollectionJSON              = "/searchblox/rest/collection/add"
+	deleteHttpFileSystemOrDatabaseCollectionJSON           = "/searchblox/rest/collection/delete"
+	updatePathHttpFileSystemOrDatabaseCollectionJSON       = "/searchblox/rest/collection/updatePath"
+	updateSettingsHttpFileSystemOrDatabaseCollectionJSON   = "/searchblox/rest/collection/updateSettings"
+	updateSchedulerHttpFileSystemOrDatabaseCollectionJSON  = "/searchblox/rest/collection/updateScheduler"
+	indexStopCrawlerHttpFileSystemOrDatabaseCollectionJSON = "/searchblox/rest/collection/actions"
 
 	// errors
 	encodeErrorJSON = "JSON encode error"
@@ -58,6 +66,7 @@ type CustomCollection struct {
 	Document Document `json:"document"`
 }
 
+//FIXME: better searchblox exception handler(Bad request, etc)
 func (s *Client) makeCall(url string, customCollection CustomCollection) error {
 	b, err := json.Marshal(customCollection)
 	if err != nil {

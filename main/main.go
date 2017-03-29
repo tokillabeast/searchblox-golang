@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	c := searchblox.Client{Host: "http://searchblox:80"}
+	c := searchblox.Client{Host: "http://localhost:80"}
 
 	customCollection := searchblox.CustomCollection{
 		ApiKey: "25B213BA03FAB750790FC63FD1C6B301",
