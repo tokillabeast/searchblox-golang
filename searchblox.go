@@ -1,4 +1,4 @@
-package client
+package searchblox
 
 import (
 	"bytes"
@@ -10,7 +10,6 @@ import (
 )
 
 const (
-	contentTypeXML  = "application/xml"
 	contentTypeJSON = "application/json"
 
 	// JSON Rest API
@@ -25,7 +24,7 @@ const (
 	encodeErrorJSON = "JSON encode error"
 )
 
-type SearchBlox struct {
+type Client struct {
 	Host string
 	// FIXME: support protocol and port separately
 	// FIXME: support XML format
@@ -59,7 +58,7 @@ type CustomCollection struct {
 	Document Document `json:"document"`
 }
 
-func (s *SearchBlox) makeCall(url string, customCollection CustomCollection) error {
+func (s *Client) makeCall(url string, customCollection CustomCollection) error {
 	b, err := json.Marshal(customCollection)
 	if err != nil {
 		return errors.New(encodeErrorJSON)
@@ -80,7 +79,7 @@ func (s *SearchBlox) makeCall(url string, customCollection CustomCollection) err
 	return nil
 }
 
-func (s *SearchBlox) CreateCustomCollection(customCollection CustomCollection) error {
+func (s *Client) CreateCustomCollection(customCollection CustomCollection) error {
 	url := fmt.Sprintf("%s%s", s.Host, createCustomCollectionJSON)
 	err := s.makeCall(url, customCollection)
 	if err != nil {
@@ -89,7 +88,7 @@ func (s *SearchBlox) CreateCustomCollection(customCollection CustomCollection) e
 	return nil
 }
 
-func (s *SearchBlox) DeleteCustomCollection(customCollection CustomCollection) error {
+func (s *Client) DeleteCustomCollection(customCollection CustomCollection) error {
 	url := fmt.Sprintf("%s%s", s.Host, deleteCustomCollectionJSON)
 	err := s.makeCall(url, customCollection)
 	if err != nil {
@@ -98,7 +97,7 @@ func (s *SearchBlox) DeleteCustomCollection(customCollection CustomCollection) e
 	return nil
 }
 
-func (s *SearchBlox) ClearCustomCollection(customCollection CustomCollection) error {
+func (s *Client) ClearCustomCollection(customCollection CustomCollection) error {
 	url := fmt.Sprintf("%s%s", s.Host, clearCustomCollectionJSON)
 	err := s.makeCall(url, customCollection)
 	if err != nil {
@@ -107,7 +106,7 @@ func (s *SearchBlox) ClearCustomCollection(customCollection CustomCollection) er
 	return nil
 }
 
-func (s *SearchBlox) IndexDocumentCustomCollection(customCollection CustomCollection) error {
+func (s *Client) IndexDocumentCustomCollection(customCollection CustomCollection) error {
 	url := fmt.Sprintf("%s%s", s.Host, indexDocumentCustomCollectionJSON)
 	err := s.makeCall(url, customCollection)
 	if err != nil {

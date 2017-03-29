@@ -28,14 +28,14 @@ After this you can check Searchblox on 80 port, open `localhost:80` in browser t
 package main
 
 import (
-	"github.com/tokillamockingbird/searchblox-golang/client"
+	"github.com/tokillamockingbird/searchblox-golang"
 )
 
 func main() {
-	c := client.SearchBlox{Host: "http://searchblox:80"}
-	customCollection := client.CustomCollection{
+	c := searchblox.Client{Host: "http://localhost:80"}
+	customCollection := searchblox.CustomCollection{
 		ApiKey: "25B213BA03FAB750790FC63FD1C6B301",
-		Document: client.Document{
+		Document: searchblox.Document{
 			Colname: "Test",
 		},
 	}
@@ -43,25 +43,25 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	indexCustomCollection := client.CustomCollection{
+	indexCustomCollection := searchblox.CustomCollection{
 		ApiKey: "25B213BA03FAB750790FC63FD1C6B301",
-		Document: client.Document{
-			Colname: "Test",
-			Url : "http://www.searchblox.com",
-			Uid : "http://www.searchblox.com",
-			Location:"http://www.searchblox.com",
-			Alpha : "string",
-			Size : "44244",
-			Title : "Text",
-			Keywords : "keywords",
-			Description : "SearchBlox Content Search Software",
-			Content : "content",
-			LastModified : "14 January 2015 06:19:42 GMT",
-			ContentType : "HTML",
-			Meta: client.Meta {
+		Document: searchblox.Document{
+			Colname:      "Test",
+			Url:          "http://www.searchblox.com",
+			Uid:          "http://www.searchblox.com",
+			Location:     "http://www.searchblox.com",
+			Alpha:        "string",
+			Size:         "44244",
+			Title:        "Text",
+			Keywords:     "keywords",
+			Description:  "SearchBlox Content Search Software",
+			Content:      "content",
+			LastModified: "14 January 2015 06:19:42 GMT",
+			ContentType:  "HTML",
+			Meta: searchblox.Meta{
 				Location: "San Francisco",
-				Temp: "23",
-				Weather: "sunny",
+				Temp:     "23",
+				Weather:  "sunny",
 			},
 		},
 	}
@@ -78,4 +78,5 @@ func main() {
 		panic(err)
 	}
 }
+
 ```
