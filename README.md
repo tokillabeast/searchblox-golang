@@ -35,7 +35,7 @@ func main() {
 	apiKey := "47AD645E72CEA9D8B2AB08A2312BF432"
 	c := searchblox.Client{Host: "http://localhost:80"}
 
-	customCollection := searchblox.CustomCollection{
+	customCollection := searchblox.Collection{
 		ApiKey: apiKey,
 		Document: &searchblox.Document{
 			ColName: "Test",
@@ -47,7 +47,7 @@ func main() {
 		panic(err)
 	}
 
-	indexCustomCollection := searchblox.CustomCollection{
+	indexDocument := searchblox.Collection{
 		ApiKey: apiKey,
 		Document: &searchblox.Document{
 			ColName:      "Test",
@@ -67,79 +67,89 @@ func main() {
 			},
 		},
 	}
-	_, err = c.IndexDocumentCustomCollection(indexCustomCollection)
+	_, err = c.IndexDocumentInCustomCollection(indexDocument)
 	if err != nil {
 		panic(err)
 	}
 
-	statusCustomCollection := searchblox.CustomCollection{
+	documentStatus := searchblox.Collection{
 		ApiKey: apiKey,
 		Document: &searchblox.Document{
 			ColName: "Test",
 			Uid:     "http://www.searchblox.com",
 		},
 	}
-	_, err = c.DocumentStatusCustomCollection(statusCustomCollection)
+	_, err = c.DocumentStatusInCustomCollection(documentStatus)
 	if err != nil {
 		panic(err)
 	}
 
-	deleteCustomCollection := searchblox.CustomCollection{
+	deleteDocument := searchblox.Collection{
 		ApiKey: apiKey,
 		Document: &searchblox.Document{
 			ColName: "Test",
 			Uid:     "http://www.searchblox.com", // Maybe Location?
 		},
 	}
-	_, err = c.DeleteDocumentCustomCollection(deleteCustomCollection)
+	_, err = c.DeleteDocumentInCustomCollection(deleteDocument)
 	if err != nil {
 		panic(err)
 	}
 
-	addUpdateDocumentHttpFileSystemCollection := searchblox.CustomCollection{
+	_, err = c.ClearCustomCollection(customCollection)
+	if err != nil {
+		panic(err)
+	}
+
+	_, err = c.DeleteCustomCollection(customCollection)
+	if err != nil {
+		panic(err)
+	}
+
+	addUpdateDocument := searchblox.Collection{
 		ApiKey: apiKey,
 		Document: &searchblox.Document{
 			ColName:  "Test",
 			Location: "http://www.searchblox.com",
 		},
 	}
-	_, err = c.AddUpdateDocumentHttpFileSystemCollection(addUpdateDocumentHttpFileSystemCollection)
+	_, err = c.AddUpdateDocumentInCollection(addUpdateDocument)
 	if err != nil {
 		panic(err)
 	}
 
-	deleteDocumentHttpFileSystemCollection := searchblox.CustomCollection{
+	deleteDocument = searchblox.Collection{
 		ApiKey: apiKey,
 		Document: &searchblox.Document{
 			ColName:  "Test",
 			Location: "http://www.searchblox.com",
 		},
 	}
-	_, err = c.DeleteDocumentHttpFileSystemCollection(deleteDocumentHttpFileSystemCollection)
+	_, err = c.DeleteDocumentInCollection(deleteDocument)
 	if err != nil {
 		panic(err)
 	}
 
-	addHttpFileSystemOrDatabaseCollection := searchblox.CustomCollection{
+	addCollection := searchblox.Collection{
 		ApiKey:  apiKey,
 		ColName: "httpcollection",
 		ColType: "http",
 	}
-	_, err = c.AddHttpFileSystemOrDatabaseCollection(addHttpFileSystemOrDatabaseCollection)
+	_, err = c.AddCollection(addCollection)
 	if err != nil {
 		panic(err)
 	}
 
-	deleteHttpFileSystemOrDatabaseCollection := searchblox.CustomCollection{
+	deleteCollection := searchblox.Collection{
 		ApiKey:  apiKey,
 		ColName: "httpcollection",
 	}
-	_, err = c.DeleteHttpFileSystemOrDatabaseCollection(deleteHttpFileSystemOrDatabaseCollection)
+	_, err = c.DeleteCollection(deleteCollection)
 	if err != nil {
 		panic(err)
 	}
 
-	updatePathHttpFileSystemOrDatabaseCollection := searchblox.CustomCollection{
+	updatePath := searchblox.Collection{
 		ApiKey:  apiKey,
 		ColName: "httpcollection",
 		RootUrls: []string{
@@ -157,12 +167,12 @@ func main() {
 			"text",
 		},
 	}
-	_, err = c.UpdatePathHttpFileSystemOrDatabaseCollection(updatePathHttpFileSystemOrDatabaseCollection)
+	_, err = c.UpdatePathInCollection(updatePath)
 	if err != nil {
 		panic(err)
 	}
 
-	updateSettingsHttpFileSystemOrDatabaseCollection := searchblox.CustomCollection{
+	updateSettings := searchblox.Collection{
 		ApiKey:           apiKey,
 		ColName:          "httpcollection",
 		KeywordInContext: "false",
@@ -207,12 +217,12 @@ func main() {
 			Password:  "adasd",
 		},
 	}
-	_, err = c.UpdateSettingsHttpFileSystemOrDatabaseCollection(updateSettingsHttpFileSystemOrDatabaseCollection)
+	_, err = c.UpdateSettingsInCollection(updateSettings)
 	if err != nil {
 		panic(err)
 	}
 
-	updateSchedulerHttpFileSystemOrDatabaseCollection := searchblox.CustomCollection{
+	updateScheduler := searchblox.Collection{
 		ApiKey:  apiKey,
 		ColName: "httpcollection",
 		Index: &searchblox.Scheduler{
@@ -228,30 +238,19 @@ func main() {
 			TimeStamp: "25-01-2016 30:05:00",
 		},
 	}
-	_, err = c.UpdateSchedulerHttpFileSystemOrDatabaseCollection(updateSchedulerHttpFileSystemOrDatabaseCollection)
+	_, err = c.UpdateSchedulerInCollection(updateScheduler)
 	if err != nil {
 		panic(err)
 	}
 
-	indexStopCrawlerHttpFileSystemOrDatabaseCollection := searchblox.CustomCollection{
+	indexStopCrawler := searchblox.Collection{
 		ApiKey:  apiKey,
 		ColName: "httpcollection",
 		Action:  "index",
 	}
-	_, err = c.IndexStopCrawlerHttpFileSystemOrDatabaseCollection(indexStopCrawlerHttpFileSystemOrDatabaseCollection)
-	if err != nil {
-		panic(err)
-	}
-
-	_, err = c.ClearCustomCollection(customCollection)
-	if err != nil {
-		panic(err)
-	}
-
-	_, err = c.DeleteCustomCollection(customCollection)
+	_, err = c.IndexStopCrawlerInCollection(indexStopCrawler)
 	if err != nil {
 		panic(err)
 	}
 }
-
 ```
