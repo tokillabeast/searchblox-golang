@@ -141,6 +141,10 @@ func (s *Client) makeCall(url string, collection CustomCollection) ([]byte, erro
 	return body, nil
 }
 
+/*
+CREATE CUSTOM COLLECTION
+https://developer.searchblox.com/v8.6/reference#restv1apicoladd
+*/
 func (s *Client) CreateCustomCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, createCustomCollection)
 	body, err := s.makeCall(url, collection)
@@ -150,6 +154,10 @@ func (s *Client) CreateCustomCollection(collection CustomCollection) (string, er
 	return string(body), nil
 }
 
+/*
+DELETE CUSTOM COLLECTION
+https://developer.searchblox.com/v8.6/reference#restv1apicoldelete
+*/
 func (s *Client) DeleteCustomCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, deleteCustomCollection)
 	body, err := s.makeCall(url, collection)
@@ -159,6 +167,10 @@ func (s *Client) DeleteCustomCollection(collection CustomCollection) (string, er
 	return string(body), nil
 }
 
+/*
+CLEAR CUSTOM COLLECTION
+https://developer.searchblox.com/v8.6/reference#json-restv1apiclear
+*/
 func (s *Client) ClearCustomCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, clearCustomCollection)
 	body, err := s.makeCall(url, collection)
@@ -168,6 +180,10 @@ func (s *Client) ClearCustomCollection(collection CustomCollection) (string, err
 	return string(body), nil
 }
 
+/*
+INDEX DOCUMENT - CUSTOM COLLECTION
+https://developer.searchblox.com/v8.6/reference#restv1apicoldelete-1
+*/
 func (s *Client) IndexDocumentCustomCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, indexDocumentCustomCollection)
 	body, err := s.makeCall(url, collection)
@@ -177,6 +193,10 @@ func (s *Client) IndexDocumentCustomCollection(collection CustomCollection) (str
 	return string(body), nil
 }
 
+/*
+DOCUMENT STATUS - CUSTOM COLLECTION
+https://developer.searchblox.com/v8.6/reference#json-restv1apistatus
+*/
 func (s *Client) DocumentStatusCustomCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, documentStatusCustomCollection)
 	body, err := s.makeCall(url, collection)
@@ -186,6 +206,10 @@ func (s *Client) DocumentStatusCustomCollection(collection CustomCollection) (st
 	return string(body), nil
 }
 
+/*
+DELETE DOCUMENT - CUSTOM COLLECTION
+https://developer.searchblox.com/v8.6/reference#json-restv1apidelete
+*/
 func (s *Client) DeleteDocumentCustomCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, deleteDocumentCustomCollection)
 	body, err := s.makeCall(url, collection)
@@ -195,6 +219,10 @@ func (s *Client) DeleteDocumentCustomCollection(collection CustomCollection) (st
 	return string(body), nil
 }
 
+/*
+ADD/UPDATE DOCUMENT - HTTP/FILESYSTEM COLLECTION
+https://developer.searchblox.com/v8.6/reference#json-restv1apidocadd
+*/
 func (s *Client) AddUpdateDocumentHttpFileSystemCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, addUpdateDocumentHttpFileSystemCollection)
 	body, err := s.makeCall(url, collection)
@@ -204,6 +232,10 @@ func (s *Client) AddUpdateDocumentHttpFileSystemCollection(collection CustomColl
 	return string(body), nil
 }
 
+/*
+DELETE DOCUMENT - HTTP/FILESYSTEM COLLECTION
+https://developer.searchblox.com/v8.6/reference#json-restv1apidocdelete
+*/
 func (s *Client) DeleteDocumentHttpFileSystemCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, deleteDocumentHttpFileSystemCollection)
 	body, err := s.makeCall(url, collection)
@@ -213,6 +245,10 @@ func (s *Client) DeleteDocumentHttpFileSystemCollection(collection CustomCollect
 	return string(body), nil
 }
 
+/*
+ADD HTTP, FILESYSTEM OR DATABASE COLLECTION
+https://developer.searchblox.com/v8.6/reference#json-restcollectionadd
+*/
 func (s *Client) AddHttpFileSystemOrDatabaseCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, addHttpFileSystemOrDatabaseCollection)
 	body, err := s.makeCall(url, collection)
@@ -222,6 +258,10 @@ func (s *Client) AddHttpFileSystemOrDatabaseCollection(collection CustomCollecti
 	return string(body), nil
 }
 
+/*
+DELETE HTTP, FILESYSTEM OR DATABASE COLLECTION
+https://developer.searchblox.com/v8.6/reference#json-restcollectiondelete
+*/
 func (s *Client) DeleteHttpFileSystemOrDatabaseCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, deleteHttpFileSystemOrDatabaseCollection)
 	body, err := s.makeCall(url, collection)
@@ -231,6 +271,10 @@ func (s *Client) DeleteHttpFileSystemOrDatabaseCollection(collection CustomColle
 	return string(body), nil
 }
 
+/*
+UPDATE PATH - HTTP, FILESYSTEM OR DATABASE COLLECTION
+https://developer.searchblox.com/v8.6/reference#json-restcollectionupdate
+*/
 func (s *Client) UpdatePathHttpFileSystemOrDatabaseCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, updatePathHttpFileSystemOrDatabaseCollection)
 	body, err := s.makeCall(url, collection)
@@ -240,6 +284,10 @@ func (s *Client) UpdatePathHttpFileSystemOrDatabaseCollection(collection CustomC
 	return string(body), nil
 }
 
+/*
+UPDATE SETTINGS - HTTP, FILESYSTEM OR DATABASE COLLECTION
+https://developer.searchblox.com/v8.6/reference#json-restcollectionupdatesettings
+*/
 func (s *Client) UpdateSettingsHttpFileSystemOrDatabaseCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, updateSettingsHttpFileSystemOrDatabaseCollection)
 	body, err := s.makeCall(url, collection)
@@ -249,6 +297,10 @@ func (s *Client) UpdateSettingsHttpFileSystemOrDatabaseCollection(collection Cus
 	return string(body), nil
 }
 
+/*
+UPDATE SCHEDULER - HTTP, FILESYSTEM OR DATABASE COLLECTION
+https://developer.searchblox.com/v8.6/reference#json-restcollectionupdatescheduler
+*/
 func (s *Client) UpdateSchedulerHttpFileSystemOrDatabaseCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, updateSchedulerHttpFileSystemOrDatabaseCollection)
 	body, err := s.makeCall(url, collection)
@@ -260,6 +312,10 @@ func (s *Client) UpdateSchedulerHttpFileSystemOrDatabaseCollection(collection Cu
 
 // FIXME: more simple titles? Maybe IndexStopCrawler and comments for this method
 // INDEX/STOP CRAWLER - HTTP, FILESYSTEM OR DATABASE COLLECTION
+/*
+INDEX/STOP CRAWLER - HTTP, FILESYSTEM OR DATABASE COLLECTION
+https://developer.searchblox.com/v8.6/reference#json-restcollectionactions
+*/
 func (s *Client) IndexStopCrawlerHttpFileSystemOrDatabaseCollection(collection CustomCollection) (string, error) {
 	url := fmt.Sprintf("%s%s", s.Host, indexStopCrawlerHttpFileSystemOrDatabaseCollection)
 	body, err := s.makeCall(url, collection)
