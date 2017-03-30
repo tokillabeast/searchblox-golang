@@ -263,7 +263,7 @@ func (s *Client) UpdateSchedulerHttpFileSystemOrDatabaseCollection(collection Cu
 // FIXME: more simple titles? Maybe IndexStopCrawler and comments for this method
 // INDEX/STOP CRAWLER - HTTP, FILESYSTEM OR DATABASE COLLECTION
 func (s *Client) IndexStopCrawlerHttpFileSystemOrDatabaseCollection(collection CustomCollection) (string, error) {
-	url := fmt.Sprintf("%s%s", s.Host, indexDocumentCustomCollectionJSON)
+	url := fmt.Sprintf("%s%s", s.Host, indexStopCrawlerHttpFileSystemOrDatabaseCollectionJSON)
 	body, err := s.makeCall(url, collection)
 	if err != nil {
 		return "", err
